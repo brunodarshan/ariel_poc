@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Altura e Comprimento</title>
+</head>
+<body>
+    <h1>Formulário de Altura e Comprimento</h1>
+    <form id="calculoEscada">
+      <h1>Calculo Escada</h1>
+        <label for="altura">Altura(CM):</label>
+        <input type="number" id="altura" name="altura" required><br><br>
+        <label for="comprimento">Comprimento(CM):</label>
+        <input type="number" id="comprimento" name="comprimento" required><br><br>
+        <button type="submit">Enviar</button>
+    </form>
+    <form id="calculoRampa">
+      <h1>Calculo Rampa</h1>
+      <label for="alturaRampa">Altura (CM):</label>
+      <input type="number" id="alturaRampa" name="alturaRampa" required><br><br>
+      <label for="comprimentoRampa">Comprimento da rampa(CM):</label>
+      <input type="number" id="comprimentoRampa" name="comprimentoRampa" required><br><br>
+      <button type="submit">Enviar</button>
+  </form>
+  <h1 id="displayMessage"></h1>
+
+    <script>
+        const displayMessage = (msg) => {
+          document.getElementById('displayMessage').innerHTML = msg;
+        }
+
+        document.getElementById('calculoEscada').addEventListener('submit', function(event) {
+            event.preventDefault(); // Previne o comportamento padrão de enviar o formulário
+
+            // Coleta os valores dos campos do formulário
+            var altura = document.getElementById('altura').value;
+            var comprimento = document.getElementById('comprimento').value;
+
+            // Ação xpto
+            console.log("Altura: " + altura);
+            console.log("Comprimento: " + comprimento);
+
+            // Aqui você pode adicionar a lógica que deseja executar com os valores
+            // Por exemplo, enviar os dados para um servidor, calcular uma área, etc.
+            const resultado = (2*altura) + (comprimento)/100
+            let message = 'Essa escada NÃO está de acordo com o Código de Obras'
+            if (resultado >= 63 & resultado <= 64) {
+              message = 'Essa escada está de acordo com o Código de Obras';
+            }
+            displayMessage(message);
+        });
+
+        document.getElementById('calculoRampa').addEventListener('submit', function(event) {
+            event.preventDefault(); // Previne o comportamento padrão de enviar o formulário
+
+            // Coleta os valores dos campos do formulário
+            var altura = parseInt(document.getElementById('alturaRampa').value);
+            var comprimento = parseInt(document.getElementById('comprimentoRampa').value);
+
+            // Ação xpto
+            console.log("Altura: " + altura);
+            console.log(typeof(altura));
+            console.log("Comprimento: " + comprimento);
+
+            // Aqui você pode adicionar a lógica que deseja executar com os valores
+            // Por exemplo, enviar os dados para um servidor, calcular uma área, etc.
+            const inclinacao = (100*altura)/comprimento;
+
+            let message = 'O programa calcula apenas rampas com elevação de até 1.5 m!';
+            
+            if (inclinacao <= 150) {
+              message = 'Essa rampa NÃO está de acordo com a Norma Brasileira - NBR 9050 - acessibilidade, da Associação Brasileira de Normas Técnicas - ABNT!\n\n';
+            if (altura<=80) {
+              if (6.25<inclinacao&&inclinacao<=8.33) {
+                message = 'Essa rampa está de acordo com a Norma Brasileira - NBR 9050 - acessibilidade, da Associação Brasileira de Normas Técnicas - ABNT!\n\n'
+              }
+            } else if(altura>80 && altura <= 100) {
+              if (625>=inclinacao&&inclinacao>500){
+                message = 'Essa rampa está de acordo com a Norma Brasileira - NBR 9050 - acessibilidade, da Associação Brasileira de Normas Técnicas - ABNT!\n\n';
+              }
+            } else if (100<altura && altura < 150) {
+              if (500>=inclinacao) {
+                message = 'Essa rampa está de acordo com a Norma Brasileira - NBR 9050 - acessibilidade, da Associação Brasileira de Normas Técnicas - ABNT!\n\n'
+              }
+            }
+            displayMessage(message);
+          }
+        });
+        
+    </script>
+</body>
+</html>
